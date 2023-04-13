@@ -163,37 +163,60 @@ public class SystemGreen {
         
         
 		System.out.println("Enter the date to start the project (dd-MM-yyyy):");
-        dateAux = input.nextLine();
-        startDateProject = controller.modifyStringToCalendar(dateAux);
-        
+        startDateProject = null;
+        while(startDateProject == null){
+            dateAux = input.nextLine().trim();
+            try{
+                startDateProject = controller.modifyStringToCalendar(dateAux);
+            }
+            catch(ParseException e){
+                System.out.println("Error at date format");
+            }
+        }   
 
 		System.out.println("Enter the date to end the project (dd-MM-yyyy):");
-		dateAux = input.nextLine();
-        endDateProject = controller.modifyStringToCalendar(dateAux);
-		
+        endDateProject = null;
+        while(endDateProject == null){
+            dateAux= input.nextLine().trim();
+            try{
+                endDateProject = controller.modifyStringToCalendar(dateAux);
+            }
+            catch(ParseException e){
+                System.out.println("Error at date format");
+            }
+
+        }
 
         System.out.println("Enter the budget of the project: $");
-        budget = input.nextDouble();
-        
+        do{ 
+            budget = input.nextDouble();
+        }while(budget <= 0);
+
         System.out.println("Enter the name of the GreenSQA manager");
         input.nextLine();
         greenSQAManagerName = input.nextLine();
 
         System.out.println("Enter the phone of the GreenSQA manager");
-        greenSQAManagerPhone = input.nextLine();
+        do{
+            greenSQAManagerPhone = input.nextLine();
+        }while(!greenSQAManagerPhone.matches("^[0-9]+$"));
 
         System.out.println("Enter the name of the company manager");
         companyManagerName = input.nextLine();
 
         System.out.println("Enter the phone of the company manager");
-        companyManagerPhone = input.nextLine();
+        do{
+            companyManagerPhone = input.nextLine();
+        }while(!companyManagerPhone.matches("^[0-9]+$"));
 
         monthStages = new int[6];
         System.out.println("Enter the months of every stage:");
         System.out.println("Remember, the stages are 0. start, 1. analysis, 2. ejecution, 3. closure, 4. monitor, 5. control");
         for (int i = 0; i < 6; i++) {
             System.out.println("months for the "+(i)+ " stage.");
-            monthStages[i] = input.nextInt();
+            do{ 
+                monthStages[i] = input.nextInt();
+            }while(monthStages[i] > -1);
         }
 
 
@@ -217,7 +240,9 @@ public class SystemGreen {
         String creationCapsuleConfirmation;
 
         System.out.println("Enter the project number:");
-        searchProject = input.nextInt();
+        do{ 
+            searchProject = input.nextInt();
+        }while(searchProject > 9 || searchProject < 0);
         input.nextLine();
 
         do {
@@ -226,7 +251,9 @@ public class SystemGreen {
         } while (!situation.matches("^.*#[^#]+#[^#]+.*$")); 
 
         System.out.println("Enter the type of the Capsule: \n0. tecnic \n1. management \n2. domain, \n3. experience");
-        typeCapsule = input.nextInt();
+        do{ 
+            typeCapsule = input.nextInt();
+        }while(typeCapsule > 3 || typeCapsule < 0);
         System.out.println("Enter your name:");
         authorCapsule = input.next();
         input.nextLine();
@@ -238,7 +265,7 @@ public class SystemGreen {
             lessonCapsule = input.nextLine();
         } while (!lessonCapsule.matches("^.*#[^#]+#[^#]+.*$"));
 
-        controller.capsuleBridge(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule, searchProject);
+        controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).addCapsule(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
         creationCapsuleConfirmation = "The capsule " + controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).getAuxIteration() +"/49 for the project "+ controller.getIteration() + " and the stage " +controller.getProject(searchProject).getAuxiliarstage() + " has been created.";
         System.out.println(creationCapsuleConfirmation);
 
@@ -256,10 +283,21 @@ public class SystemGreen {
         Calendar startNewStageReal;
         String auxStartStage;
         System.out.println("Enter the project number");
-        searchProject = input.nextInt();
+        do{ 
+            searchProject = input.nextInt();
+        }while(searchProject > 9 || searchProject < 0);
         System.out.println("Enter the date for start the real new time stage (dd-MM-yyyy)"); 
-        auxStartStage = input.next();
-        startNewStageReal = controller.modifyStringToCalendar(auxStartStage);
+        startNewStageReal = null;
+        while(startNewStageReal == null){
+            auxStartStage = input.nextLine().trim();
+            try{
+                startNewStageReal = controller.modifyStringToCalendar(auxStartStage);
+            }
+            catch(ParseException e){
+                System.out.println("Error at date format");
+            }
+
+        }
 
         String futureEndStage;
 
@@ -282,11 +320,20 @@ public class SystemGreen {
         int stage;
         
         System.out.println("Enter the project number");
-        searchProject = input.nextInt();
+        do{ 
+            searchProject = input.nextInt();
+        }while(searchProject > 9 || searchProject < 0);
+        
         System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
-        stage = input.nextInt();
+        do{ 
+            stage = input.nextInt();
+        }while(stage > 5 || stage < 0);
+        
         System.out.println("Enter the capsule number");
-        capsule = input.nextInt();
+        do{ 
+            capsule = input.nextInt();
+        }while(searchProject > 49 || searchProject < 0);
+        
 
         if(controller.getProject(searchProject).getStage(stage).getCapsule(capsule).getLessonCapsule() == null){
             System.out.println("The capsule are empty");
@@ -313,12 +360,20 @@ public class SystemGreen {
         int stage;
         String URLpost;
 
-        System.out.println("Enter the project number:");
-        searchProject = input.nextInt();
-        System.out.println("Enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
-        stage = input.nextInt();
+        System.out.println("Enter the project number");
+        do{ 
+            searchProject = input.nextInt();
+        }while(searchProject > 9 || searchProject < 0);
+        
+        System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
+        do{ 
+            stage = input.nextInt();
+        }while(stage > 5 || stage < 0);
+        
         System.out.println("Enter the capsule number");
-        capsule = input.nextInt();
+        do{ 
+            capsule = input.nextInt();
+        }while(searchProject > 49 || searchProject < 0);
 
         if(controller.getProject(searchProject).getStage(stage).getCapsule(capsule).isApproveCapsule() == true){
 
@@ -343,7 +398,9 @@ public class SystemGreen {
         int project;
 
         System.out.println("Enter the project number to search");
-        project = input.nextInt();
+        do{
+            project = input.nextInt();
+        }while(project < 0 || project > 9);
 
         int tecnicAmount = 0, managementAmount = 0, domainAmount = 0, experienceAmount = 0;
 
@@ -376,10 +433,16 @@ public class SystemGreen {
         int project;
         int stage;
         boolean exist = false;
-        System.out.println("Enter the project");
-        project = input.nextInt();
-        System.out.println("Enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
-        stage = input.nextInt();
+
+        System.out.println("Enter the project number");
+        do{ 
+            project = input.nextInt();
+        }while(project > 9 || project < 0);
+        
+        System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
+        do{ 
+            stage = input.nextInt();
+        }while(stage > 5 || stage < 0);
 
         for (int i = 0; i < 50; i++) {
             if(controller.getProject(project).getStage(stage).getCapsule(i).getLessonCapsule() != null){ 
@@ -399,7 +462,6 @@ public class SystemGreen {
     public void projectNameMostCapsule(){
 
         int aux = 0;
-        int helpI = -1;
         int amount[] = {0,0,0,0,0,0,0,0,0,0};
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 6; j++){
@@ -414,19 +476,17 @@ public class SystemGreen {
         }
         
         for (int i = 0; i < 10; i++){
-
             if(amount[i] > aux){
-
                 aux = amount[i];
-                helpI = i;
-
-    
             }
-
-            
         }
-        System.out.println("The project " +controller.getProject(helpI).getNameProject()+ " have the greator amount of capsules with " + aux + " capsules");
-        
+
+        for (int i = 0; i < 10; i++) {
+            if(amount[i] == aux){
+                System.out.println("The project " +controller.getProject(i).getNameProject()+ " have the greator amount of capsules with " + aux + " capsules");
+                
+            }
+        }
 
     }
     /**

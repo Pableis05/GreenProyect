@@ -1,5 +1,6 @@
 package model;
 import java.util.Calendar;
+
 /**
 This class represents a Project.
 It contains the name of the project, the start date, end date, budget,
@@ -61,6 +62,7 @@ public class Project {
 
         stages[auxiliarStage].setStartDateStage(realStartDateStage);
         stages[auxiliarStage].setEndDateStage(realEndDateStage);
+        
 
         if(auxiliarStage == 0){
             stages[auxiliarStage].setActiveStage(true);
@@ -71,6 +73,25 @@ public class Project {
             stages[auxiliarStage-1].setActiveStage(false);
            
         }
+        
+        switch(auxiliarStage){
+
+            case 0: stages[auxiliarStage].setTypeStage(TypeStage.START); 
+            break;
+            case 1: stages[auxiliarStage].setTypeStage(TypeStage.ANALYSIS); 
+            break;
+            case 2: stages[auxiliarStage].setTypeStage(TypeStage.EJECUTION); 
+            break;
+            case 3: stages[auxiliarStage].setTypeStage(TypeStage.CLOSURE); 
+            break;
+            case 4: stages[auxiliarStage].setTypeStage(TypeStage.MONITOR); 
+            break;
+            case 5: stages[auxiliarStage].setTypeStage(TypeStage.CONTROL); 
+            break;
+            
+
+        }
+        
         auxiliarStage++;
 
     }

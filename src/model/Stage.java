@@ -15,6 +15,7 @@ public class Stage{
     private Calendar realEndDateStage;
     private boolean activeStage;
     private Capsule capsules[];
+    private TypeStage typeStage;
     private int auxIteration;
 
     /**
@@ -30,6 +31,7 @@ public class Stage{
         activeStage = false;
         capsules = new Capsule[50];
         startBasicCapsule();
+        typeStage = TypeStage.START;
         auxIteration = 0;
     }
     /**
@@ -144,7 +146,13 @@ public class Stage{
     public boolean isActiveStage() {
         return activeStage;
     }
-
+    public TypeStage getTypeStage() {
+        return typeStage;
+    }
+    public void setTypeStage(TypeStage typeStage) {
+        this.typeStage = typeStage;
+    }
+    
     
     
 }

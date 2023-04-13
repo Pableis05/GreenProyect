@@ -14,6 +14,7 @@ public class Capsule {
 
     private int idCapsule;
     private String situation;
+    private TypeCapsule enumTypeCapsule;
     private int typeCapsule;
     private String authorCapsule;
     private String positionAuthor;
@@ -37,6 +38,18 @@ public class Capsule {
         idCapsule = (int) ((Math.random()*900000)+100000); 
         this.situation = situation;
         this.typeCapsule = typeCapsule;
+        switch(typeCapsule){
+
+            case 0: enumTypeCapsule = TypeCapsule.TECNIC;
+            break;
+            case 1: enumTypeCapsule = TypeCapsule.MANAGMENT;
+            break;
+            case 2: enumTypeCapsule = TypeCapsule.DOMAIN;
+            break;
+            case 3: enumTypeCapsule = TypeCapsule.EXPERIENCE;
+            break;
+
+        }
         this.authorCapsule = authorCapsule;
         this.positionAuthor = positionAuthor;
         this.lessonCapsule = lessonCapsule;
@@ -227,5 +240,9 @@ public class Capsule {
     public String[] getHashtag() {
         return hashtag;
     }
+    public TypeCapsule getEnumTypeCapsule() {
+        return enumTypeCapsule;
+    }
+    
     
 }

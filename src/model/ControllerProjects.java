@@ -87,21 +87,7 @@ public class ControllerProjects {
         
         return endnewStage;
     }
-    /**
-    * Adds a new capsule to the stage of a project.
-    * 
-    * @param situation      The situation that prompted the creation of the capsule.
-    * @param typeCapsule    The type of the capsule.
-    * @param authorCapsule  The author of the capsule.
-    * @param positionAuthor The position of the author of the capsule.
-    * @param lessonCapsule  The lesson learned from the situation that prompted the creation of the capsule.
-    * @param searchProject  The index of the project in the projects array to add the capsule to.
-    */
-    public void capsuleBridge(String situation, int typeCapsule, String authorCapsule, String positionAuthor, String lessonCapsule, int searchProject){
 
-        projects[searchProject].capsuleToStage(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
-        
-    }
     /**
     * Converts a String object in the format "dd-MM-yyyy" to a Calendar object.
     * 
