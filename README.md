@@ -1,3 +1,3 @@
 # GreenProyect
-Pablo Andres Guzman Alarcon
+Pablo Andres Guzmán Alarcón
 A00399523

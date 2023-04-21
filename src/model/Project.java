@@ -18,6 +18,8 @@ public class Project {
     private Manager greenSQAManager;
     private Manager companyManager;
     private int auxiliarStage;
+    private int auxiliarCollaborator;
+    private Collaborator collaborators[];
 
     /**
     * Constructor method for a Project object.
@@ -39,7 +41,10 @@ public class Project {
         stages = new Stage[6];
         startBasicStage();
         this.monthsStage = monthsStage;
+        collaborators = new Collaborator[10];
+        startBasicCollaborators();
         auxiliarStage = 0;
+        auxiliarCollaborator = 0;
         greenSQAManager = new Manager(greenSQAManagerName, greenSQAManagerPhone);
         companyManager = new Manager(companyManagerName, companyManagerPhone);
     }
@@ -50,6 +55,14 @@ public class Project {
 
         for (int i = 0; i < stages.length; i++) {
             stages[i] = new Stage(null, null);
+        }
+
+    }
+
+    public void startBasicCollaborators(){
+
+        for (int i = 0; i < collaborators.length; i++) {
+            collaborators[i] = new Collaborator("", "", "");
         }
 
     }
@@ -123,6 +136,15 @@ public class Project {
         stages[auxiliarStage-1].addCapsule(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
 
     } 
+
+    public void addCollaborator(String name, String position, String id){
+
+        collaborators[auxiliarCollaborator] = new Collaborator(name, position, id);
+        auxiliarCollaborator++;
+
+    }
+
+
     /**
     * Get the budget of the project.
     *
@@ -240,5 +262,13 @@ public class Project {
     public Manager getCompanyManager() {
         return companyManager;
     }
+    public Collaborator getCollaborators(int position) {
+        return collaborators[position];
+    }
+    public int getAuxiliarCollaborator() {
+        return auxiliarCollaborator-1;
+    }
+
+    
 
 }

@@ -4,7 +4,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
+
+import javax.annotation.processing.SupportedOptions;
+
 import model.ControllerProjects;
+
 
 /**
 
@@ -50,9 +54,9 @@ public class SystemGreen {
         int option = -1;
         boolean projectCreated = false;
         while(option != 0){ 
-        System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "1. Create a project", "2. Culminate a project stage", "3. Register capsule", "4. Approve capsule", "5. Post capsule", "6. Amount capsule for capsule type", "7. Lessons for a stage", "8. Greator amount capsule project name", "9. Check if someone do a capsule", "10. Situtaions and lessons learned by the approve capsules", "0. EXIT");
-        option = input.nextInt();
-        switch(option){
+            System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "1. Create a project", "2. Culminate a project stage", "3. Register collaborator", "4. Register capsule", "5. Approve capsule", "6. Post capsule", "7. Amount capsule for capsule type", "8. Lessons for a stage", "9. Greator amount capsule project name", "10. Check if someone do a capsule", "11. Situtaions and lessons learned by the approve capsules", "0. EXIT");
+            option = input.nextInt();
+            switch(option){
                 case 1:
                 initProject();
                 projectCreated = true;
@@ -70,10 +74,18 @@ public class SystemGreen {
                     System.out.println("First create a project");
                 }
                 else{ 
-                registerCapsule();
+                    registerCollaborator();
                 }
                 break;
                 case 4: 
+                if(projectCreated == false){
+                    System.out.println("First create a project");
+                }
+                else{ 
+                    registerCapsule();
+                }
+                break;
+                case 5: 
                 if(projectCreated == false){
                     System.out.println("First create a project and a capsule");
                 }
@@ -81,7 +93,7 @@ public class SystemGreen {
                     approveCapsule();
                 }
                 break;
-                case 5:
+                case 6:
                 if(projectCreated == false){
                     System.out.println("First create a project and a capsule");
                 }
@@ -89,7 +101,7 @@ public class SystemGreen {
                 publishCapsule();
                 }
                 break;
-                case 6: 
+                case 7: 
                 if(projectCreated == false){
                     System.out.println("First create a project and a capsule");
                 }
@@ -97,7 +109,7 @@ public class SystemGreen {
                     informCapsuleType();
                 }
                 break;
-                case 7:
+                case 8:
                 if(projectCreated == false){
                     System.out.println("First create a project and a capsule");
                 }
@@ -105,7 +117,7 @@ public class SystemGreen {
                     informLessonsForStage();
                 }
                 break;
-                case 8:
+                case 9:
                 if(projectCreated == false){
                     System.out.println("First create a project and a capsule");
                 }
@@ -113,7 +125,7 @@ public class SystemGreen {
                     projectNameMostCapsule();
                 }
                 break;
-                case 9:
+                case 10:
                 if(projectCreated == false){
                     System.out.println("First create a project and a capsule");
                 }
@@ -121,7 +133,7 @@ public class SystemGreen {
                     checkCapsulesSomeone();
                 }
                 break;
-                case 10:
+                case 11:
                 if(projectCreated == false){
                     System.out.println("First create a project and a capsule");
                 }
@@ -190,7 +202,7 @@ public class SystemGreen {
         System.out.println("Enter the budget of the project: $");
         do{ 
             budget = input.nextDouble();
-        }while(budget <= 0);
+        }while(budget < 0);
 
         System.out.println("Enter the name of the GreenSQA manager");
         input.nextLine();
@@ -216,14 +228,14 @@ public class SystemGreen {
             System.out.println("months for the "+(i)+ " stage.");
             do{ 
                 monthStages[i] = input.nextInt();
-            }while(monthStages[i] > -1);
+            }while(monthStages[i] < -1);
         }
 
 
         controller.addProject(nameProject, startDateProject,endDateProject, budget, monthStages, greenSQAManagerName, greenSQAManagerPhone, companyManagerName, companyManagerPhone);
-        creationProjectConfirmation = "The project "+ controller.getIteration() +"./9 has been created";
+        creationProjectConfirmation = "The project "+ controller.getIteration() +" has been created. (" + controller.getIteration() + "/9)";
         System.out.println(creationProjectConfirmation);
-        System.out.println("The Stage " + controller.getProject(controller.getIteration()).getAuxiliarstage() + "./5 has been created.");
+        System.out.println("The Stage " + controller.getProject(controller.getIteration()).getAuxiliarstage() + " has been created.  (" + controller.getProject(controller.getIteration()).getAuxiliarstage() + "/5)");
     }
 
     /**
@@ -254,20 +266,35 @@ public class SystemGreen {
         do{ 
             typeCapsule = input.nextInt();
         }while(typeCapsule > 3 || typeCapsule < 0);
-        System.out.println("Enter your name:");
+
+
+        System.out.println("Enter your name of collaborator:");
         authorCapsule = input.next();
         input.nextLine();
         System.out.println("Enter your position in the company:");
         positionAuthor = input.nextLine();
 
-        do {
-            System.out.println("Enter the lesson: (Remember that the lesson have to contain 1-3 keywords between ##, Example: Hey #Hello world# How are #you# ?)");
-            lessonCapsule = input.nextLine();
-        } while (!lessonCapsule.matches("^.*#[^#]+#[^#]+.*$"));
+        boolean checkData = false;
 
-        controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).addCapsule(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
-        creationCapsuleConfirmation = "The capsule " + controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).getAuxIteration() +"/49 for the project "+ controller.getIteration() + " and the stage " +controller.getProject(searchProject).getAuxiliarstage() + " has been created.";
-        System.out.println(creationCapsuleConfirmation);
+        for (int i = 0; i < 10; i++) {
+            if(controller.getProject(searchProject).getCollaborators(i).getNameCollaborator().equals(authorCapsule) && controller.getProject(searchProject).getCollaborators(i).getPositionCollaborator().equals(positionAuthor)){
+                checkData = true;
+            }        
+        }
+
+        if(checkData){
+            do {
+                System.out.println("Enter the lesson: (Remember that the lesson have to contain 1-3 keywords between ##, Example: Hey #Hello world# How are #you# ?)");
+                lessonCapsule = input.nextLine();
+            } while (!lessonCapsule.matches("^.*#[^#]+#[^#]+.*$"));
+    
+            controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).addCapsule(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
+            creationCapsuleConfirmation = "The capsule " + controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).getAuxIteration() +"/49 for the project "+ controller.getIteration() + " and the stage " +controller.getProject(searchProject).getAuxiliarstage() + " has been created.";
+            System.out.println(creationCapsuleConfirmation);
+        }
+        else{
+            System.out.println("The author information don't match with the information of the project");
+        }
 
     }
 
@@ -288,7 +315,7 @@ public class SystemGreen {
         }while(searchProject > 9 || searchProject < 0);
         System.out.println("Enter the date for start the real new time stage (dd-MM-yyyy)"); 
         startNewStageReal = null;
-        while(startNewStageReal == null){
+        do{
             auxStartStage = input.nextLine().trim();
             try{
                 startNewStageReal = controller.modifyStringToCalendar(auxStartStage);
@@ -297,7 +324,7 @@ public class SystemGreen {
                 System.out.println("Error at date format");
             }
 
-        }
+        }while(startNewStageReal == null);
 
         String futureEndStage;
 
@@ -570,8 +597,33 @@ public class SystemGreen {
 
             System.out.println("That hashtag search is not equal to other one in the bases");
         }
-
     }
 
+
+    public void registerCollaborator(){
+
+        String name, position, id;
+        int project;
+        System.out.println("Enter the name of the collaborator: ");
+        name = input.next();
+        System.out.println("Enter the position of the collaborator in the company: ");
+        position = input.next();
+        System.out.println("Enter the id of the collaborator");
+        id = input.next();
+        System.out.println("Enter the number of the assigned project to the collaborator");
+        project = input.nextInt();
+        
+        if(controller.getProject(project).getBudget() == 0){
+            System.out.println("That proyect is empty");
+
+        }
+        else{
+            controller.getProject(project).addCollaborator(name, position, id);
+
+            System.out.println("The collaborator "+ controller.getProject(project).getAuxiliarCollaborator() +" has been created in that project (" + controller.getProject(project).getAuxiliarCollaborator()+"/10)");
+        }
+        
+
+    }
 
 }
