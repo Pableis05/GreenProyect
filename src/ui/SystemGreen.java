@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Scanner;
 
-import javax.annotation.processing.SupportedOptions;
-
 import model.ControllerProjects;
 
 
@@ -39,7 +37,7 @@ public class SystemGreen {
     */
     public static void main(String[] args) throws ParseException {
         SystemGreen greenSQA = new SystemGreen();
-        System.out.println("WELCOME TO GREENSQA DATA");
+        System.out.println("WELCOME TO GREENSQA DATA!!!!!!!!!!!!!!");
         greenSQA.menu();
 
         
@@ -54,7 +52,7 @@ public class SystemGreen {
         int option = -1;
         boolean projectCreated = false;
         while(option != 0){ 
-            System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n", "1. Create a project", "2. Culminate a project stage", "3. Register collaborator", "4. Register capsule", "5. Approve capsule", "6. Post capsule", "7. Amount capsule for capsule type", "8. Lessons for a stage", "9. Greator amount capsule project name", "10. Check if someone do a capsule", "11. Situtaions and lessons learned by the approve capsules", "0. EXIT");
+            System.out.printf("%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n%s%n","Menu:","------------------------------------", "1. Create a project", "2. Culminate a project stage", "3. Register collaborator", "4. Register capsule", "5. Approve capsule", "6. Post capsule", "7. Amount capsule for capsule type", "8. Lessons for a stage", "9. Greator amount capsule project name", "10. Check if someone do a capsule", "11. Situtaions and lessons learned by the approve capsules", "0. EXIT", "------------------------------------");
             option = input.nextInt();
             switch(option){
                 case 1:
@@ -235,7 +233,7 @@ public class SystemGreen {
         controller.addProject(nameProject, startDateProject,endDateProject, budget, monthStages, greenSQAManagerName, greenSQAManagerPhone, companyManagerName, companyManagerPhone);
         creationProjectConfirmation = "The project "+ controller.getIteration() +" has been created. (" + controller.getIteration() + "/9)";
         System.out.println(creationProjectConfirmation);
-        System.out.println("The Stage " + controller.getProject(controller.getIteration()).getAuxiliarstage() + " has been created.  (" + controller.getProject(controller.getIteration()).getAuxiliarstage() + "/5)");
+        System.out.println("The Stage " + controller.getProject(controller.getIteration()).getStage(0).getTypeStage() + " has been created.  (" + controller.getProject(controller.getIteration()).getAuxiliarstage() + "/5)");
     }
 
     /**
@@ -255,46 +253,52 @@ public class SystemGreen {
         do{ 
             searchProject = input.nextInt();
         }while(searchProject > 9 || searchProject < 0);
-        input.nextLine();
+        if(controller.checkProjectExist(searchProject)){
+            input.nextLine();
 
-        do {
-            System.out.println("Enter the situation: (Remember that the situation have to contain 1-3 keywords between ##, Example: Hey #Hello world# How are #you# ?)");
-            situation = input.nextLine();
-        } while (!situation.matches("^.*#[^#]+#[^#]+.*$")); 
-
-        System.out.println("Enter the type of the Capsule: \n0. tecnic \n1. management \n2. domain, \n3. experience");
-        do{ 
-            typeCapsule = input.nextInt();
-        }while(typeCapsule > 3 || typeCapsule < 0);
-
-
-        System.out.println("Enter your name of collaborator:");
-        authorCapsule = input.next();
-        input.nextLine();
-        System.out.println("Enter your position in the company:");
-        positionAuthor = input.nextLine();
-
-        boolean checkData = false;
-
-        for (int i = 0; i < 10; i++) {
-            if(controller.getProject(searchProject).getCollaborators(i).getNameCollaborator().equals(authorCapsule) && controller.getProject(searchProject).getCollaborators(i).getPositionCollaborator().equals(positionAuthor)){
-                checkData = true;
-            }        
-        }
-
-        if(checkData){
             do {
-                System.out.println("Enter the lesson: (Remember that the lesson have to contain 1-3 keywords between ##, Example: Hey #Hello world# How are #you# ?)");
-                lessonCapsule = input.nextLine();
-            } while (!lessonCapsule.matches("^.*#[^#]+#[^#]+.*$"));
+                System.out.println("Enter the situation: (Remember that the situation have to contain 1-5 keywords between ## and the sentence have to finish without a #, Example: Hey #Hello world# How #are# you?)");
+                situation = input.nextLine();
+            } while (!situation.matches("^.*#[^#]+#[^#]+.*$")); 
     
-            controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).addCapsule(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
-            creationCapsuleConfirmation = "The capsule " + controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).getAuxIteration() +"/49 for the project "+ controller.getIteration() + " and the stage " +controller.getProject(searchProject).getAuxiliarstage() + " has been created.";
-            System.out.println(creationCapsuleConfirmation);
+            System.out.println("Enter the type of the Capsule: \n0. tecnic \n1. management \n2. domain, \n3. experience");
+            do{ 
+                typeCapsule = input.nextInt();
+            }while(typeCapsule > 3 || typeCapsule < 0);
+    
+    
+            System.out.println("Enter your name of collaborator:");
+            authorCapsule = input.next();
+            input.nextLine();
+            System.out.println("Enter your position in the company:");
+            positionAuthor = input.nextLine();
+    
+            boolean checkData = false;
+    
+            for (int i = 0; i < 10; i++) {
+                if(controller.getProject(searchProject).getCollaborators(i).getNameCollaborator().equals(authorCapsule) && controller.getProject(searchProject).getCollaborators(i).getPositionCollaborator().equals(positionAuthor)){
+                    checkData = true;
+                }        
+            }
+    
+            if(checkData){
+                do {
+                    System.out.println("Enter the lesson: (Remember that the lesson have to contain 1-5 keywords between ## and the sentence have to finish without a #, Example: Hey #Hello world# How #are# you?)");
+                    lessonCapsule = input.nextLine();
+                } while (!lessonCapsule.matches("^.*#[^#]+#[^#]+.*$"));
+        
+                controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).addCapsule(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
+                creationCapsuleConfirmation = "The capsule " + controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).getAuxIteration() +"/49 for the project "+ controller.getProject(searchProject).getNameProject() + " and the stage " + controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).getTypeStage() + " has been created.";
+                System.out.println(creationCapsuleConfirmation);
+            }
+            else{
+                System.out.println("The author information don't match with the information of the project");
+            }
         }
         else{
-            System.out.println("The author information don't match with the information of the project");
+            System.out.println("The proyect doesn't exist");
         }
+
 
     }
 
@@ -313,25 +317,30 @@ public class SystemGreen {
         do{ 
             searchProject = input.nextInt();
         }while(searchProject > 9 || searchProject < 0);
-        System.out.println("Enter the date for start the real new time stage (dd-MM-yyyy)"); 
-        startNewStageReal = null;
-        do{
-            auxStartStage = input.nextLine().trim();
-            try{
-                startNewStageReal = controller.modifyStringToCalendar(auxStartStage);
-            }
-            catch(ParseException e){
-                System.out.println("Error at date format");
-            }
 
-        }while(startNewStageReal == null);
-
-        String futureEndStage;
-
-        Calendar aux = controller.culminateStage(searchProject, startNewStageReal);
-        System.out.println("The Stage " + controller.getProject(searchProject).getAuxiliarstage() + "/5 has been created.");
-        futureEndStage = new SimpleDateFormat("dd-MM-yyyy").format(aux.getTime());
-        System.out.println("The end of this stage have to finish in this date: " + futureEndStage + " to achieve with the duration of the stages");
+        if(controller.checkProjectExist(searchProject)){
+            System.out.println("Enter the date for start the real new time stage (dd-MM-yyyy)"); 
+            startNewStageReal = null;
+            do{
+                auxStartStage = input.nextLine();
+                try{
+                    startNewStageReal = controller.modifyStringToCalendar(auxStartStage);
+                }
+                catch(ParseException e){}
+    
+            }while(startNewStageReal == null);
+    
+            String futureEndStage;
+    
+            Calendar aux = controller.culminateStage(searchProject, startNewStageReal);
+            System.out.println("The Stage " + controller.getProject(searchProject).getStage(controller.getProject(searchProject).getAuxiliarstage()).getTypeStage() + " (" +controller.getProject(searchProject).getAuxiliarstage() + "/5)  has been created.");
+            futureEndStage = new SimpleDateFormat("dd-MM-yyyy").format(aux.getTime());
+            System.out.println("The end of this stage have to finish in this date: " + futureEndStage + " to achieve with the duration of the stages");
+    
+        }
+        else{
+            System.out.println("The proyect doesn't exist");
+        }
 
     }
 
@@ -350,26 +359,30 @@ public class SystemGreen {
         do{ 
             searchProject = input.nextInt();
         }while(searchProject > 9 || searchProject < 0);
-        
-        System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
-        do{ 
-            stage = input.nextInt();
-        }while(stage > 5 || stage < 0);
-        
-        System.out.println("Enter the capsule number");
-        do{ 
-            capsule = input.nextInt();
-        }while(searchProject > 49 || searchProject < 0);
-        
-
-        if(controller.getProject(searchProject).getStage(stage).getCapsule(capsule).getLessonCapsule() == null){
-            System.out.println("The capsule are empty");
+        if(controller.checkProjectExist(searchProject)){
+            System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
+            do{ 
+                stage = input.nextInt();
+            }while(stage > 5 || stage < 0);
+            
+            System.out.println("Enter the capsule number");
+            do{ 
+                capsule = input.nextInt();
+            }while(searchProject > 49 || searchProject < 0);
+            
+    
+            if(controller.getProject(searchProject).getStage(stage).getCapsule(capsule).getLessonCapsule() == null){
+                System.out.println("The capsule are empty");
+            }
+            else{ 
+                controller.getProject(searchProject).getStage(stage).getCapsule(capsule).setApproveCapsule(true);
+                calendarTime = Calendar.getInstance();
+                timeStamp = new SimpleDateFormat("dd-MM-yyyy").format(calendarTime.getTime());
+                System.out.println("The capsule has been aprroved in " + timeStamp);
+            }
         }
-        else{ 
-            controller.getProject(searchProject).getStage(stage).getCapsule(capsule).setApproveCapsule(true);
-            calendarTime = Calendar.getInstance();
-            timeStamp = new SimpleDateFormat("dd-MM-yyyy").format(calendarTime.getTime());
-            System.out.println("The capsule has been aprroved in " + timeStamp);
+        else{
+            System.out.println("The proyect doesn't exist");
         }
         
 
@@ -391,30 +404,35 @@ public class SystemGreen {
         do{ 
             searchProject = input.nextInt();
         }while(searchProject > 9 || searchProject < 0);
-        
-        System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
-        do{ 
-            stage = input.nextInt();
-        }while(stage > 5 || stage < 0);
-        
-        System.out.println("Enter the capsule number");
-        do{ 
-            capsule = input.nextInt();
-        }while(searchProject > 49 || searchProject < 0);
-
-        if(controller.getProject(searchProject).getStage(stage).getCapsule(capsule).isApproveCapsule() == true){
-
-            System.out.println("The capsule has been published");
-            URLpost =  "https://github.com/capsules/" + controller.getProject(searchProject).getStage(stage).getCapsule(capsule).getUrl();
-            System.out.println("The URL fot the HTML is:" +URLpost);
-            controller.getProject(searchProject).getStage(stage).getCapsule(capsule).setPublishCapsule(true);
-
+        if(controller.checkProjectExist(searchProject)){
+            System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
+            do{ 
+                stage = input.nextInt();
+            }while(stage > 5 || stage < 0);
+            
+            System.out.println("Enter the capsule number");
+            do{ 
+                capsule = input.nextInt();
+            }while(searchProject > 49 || searchProject < 0);
+    
+            if(controller.getProject(searchProject).getStage(stage).getCapsule(capsule).isApproveCapsule() == true){
+    
+                System.out.println("The capsule has been published");
+                URLpost =  "https://github.com/capsules/" + controller.getProject(searchProject).getStage(stage).getCapsule(capsule).getUrl();
+                System.out.println("The URL fot the HTML is:" +URLpost);
+                controller.getProject(searchProject).getStage(stage).getCapsule(capsule).setPublishCapsule(true);
+    
+            }
+            else{
+    
+                System.out.println("The capsule is not verify to be published");
+    
+            }   
         }
         else{
-
-            System.out.println("The capsule is not verify to be published");
-
-        }   
+            System.out.println("The proyect doesn't exist");
+        }
+        
     }
 
     /**
@@ -428,27 +446,31 @@ public class SystemGreen {
         do{
             project = input.nextInt();
         }while(project < 0 || project > 9);
+        if(controller.checkProjectExist(project)){
+            int tecnicAmount = 0, managementAmount = 0, domainAmount = 0, experienceAmount = 0;
 
-        int tecnicAmount = 0, managementAmount = 0, domainAmount = 0, experienceAmount = 0;
-
-        for (int i = 0; i < 6; i++){
-            for (int j = 0; j < 50; j++) {
-                switch(controller.getProject(project).getStage(i).getCapsule(j).getTypeCapsule()){
-
-                    case 0: tecnicAmount++; 
-                    break;
-                    case 1: managementAmount++; 
-                    break;
-                    case 2: domainAmount++; 
-                    break;
-                    case 3: experienceAmount++; 
-                    break;
+            for (int i = 0; i < 6; i++){
+                for (int j = 0; j < 50; j++) {
+                    switch(controller.getProject(project).getStage(i).getCapsule(j).getTypeCapsule()){
+    
+                        case 0: tecnicAmount++; 
+                        break;
+                        case 1: managementAmount++; 
+                        break;
+                        case 2: domainAmount++; 
+                        break;
+                        case 3: experienceAmount++; 
+                        break;
+                    }
                 }
             }
+    
+            System.out.println("The amount of tecnic capsules is: " + tecnicAmount +  ", The amount of management capsules is: " + managementAmount+  ", The amount of domain capsules is: " + domainAmount +", The amount of experience capsules is: " + experienceAmount);
+    
         }
-
-        System.out.println("The amount of tecnic capsules is: " + tecnicAmount +  ", The amount of management capsules is: " + managementAmount+  ", The amount of domain capsules is: " + domainAmount +", The amount of experience capsules is: " + experienceAmount);
-
+        else{
+            System.out.println("The proyect doesn't exist");
+        }
     }
 
     /**
@@ -465,22 +487,27 @@ public class SystemGreen {
         do{ 
             project = input.nextInt();
         }while(project > 9 || project < 0);
-        
-        System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
-        do{ 
-            stage = input.nextInt();
-        }while(stage > 5 || stage < 0);
-
-        for (int i = 0; i < 50; i++) {
-            if(controller.getProject(project).getStage(stage).getCapsule(i).getLessonCapsule() != null){ 
-                exist = true;
-                System.out.println("Lesson learn number "+(i+1) +": " + controller.getProject(project).getStage(stage).getCapsule(i).getLessonCapsule());
+        if(controller.checkProjectExist(project)){
+            System.out.println("enter the stage \n0. start \n1. analysis \n2. ejecution, \n3. closure \n4. monitor \n5. control");
+            do{ 
+                stage = input.nextInt();
+            }while(stage > 5 || stage < 0);
+    
+            for (int i = 0; i < 50; i++) {
+                if(controller.getProject(project).getStage(stage).getCapsule(i).getLessonCapsule() != null){ 
+                    exist = true;
+                    System.out.println("Lesson learn number "+(i+1) +": " + controller.getProject(project).getStage(stage).getCapsule(i).getLessonCapsule());
+                }
+            }
+            if(exist == false){
+    
+                System.out.println("The lessons are empty");
             }
         }
-        if(exist == false){
-
-            System.out.println("The lessons are empty");
+        else{
+            System.out.println("The proyect doesn't exist");
         }
+        
     }
     /**
     *This method determines which project has the most capsules and prints out
@@ -525,28 +552,33 @@ public class SystemGreen {
 
         String name;
         boolean personWrite = false;
-        System.out.println("Enter the name of the person");
+
+        System.out.println("Enter the name of the collab");
         name = input.next();
 
-        for (int i = 0; i < 10; i++) {
-            for (int j = 0; j < 6; j++) {
-                for (int j2 = 0; j2 < 50; j2++) {
-                    if (controller.getProject(i).getStage(j).getCapsule(j2).getAuthorCapsule() == null) {
-                        return;
+        if(controller.checkCollaboratorExist(name)){
+            for (int i = 0; i < 10; i++) {
+                for (int j = 0; j < 6; j++) {
+                    for (int j2 = 0; j2 < 50; j2++) {
+                        if (controller.getProject(i).getStage(j).getCapsule(j2).getAuthorCapsule() == null) {
+                            return;
+                        }
+                        else if(controller.getProject(i).getStage(j).getCapsule(j2).getAuthorCapsule().equals(name) ==  true){
+                            personWrite = true;
+                            System.out.println(name + " has create a capsule in project " + controller.getProject(i).getNameProject() + ", stage " +controller.getProject(i).getStage(j).getTypeStage()+ ", capsule number "+j2);
+                            System.out.println("Saying in the lesson: " + controller.getProject(i).getStage(j).getCapsule(j2).getLessonCapsule());
+                        }
                     }
-                    else if(controller.getProject(i).getStage(j).getCapsule(j2).getAuthorCapsule().equals(name) ==  true){
-                        personWrite = true;
-                        System.out.println(name + " has create a capsule in project " + i + ", stage " +j+ ", capsule number "+j2);
-                        System.out.println("Saying in the lesson: " + controller.getProject(i).getStage(j).getCapsule(j2).getLessonCapsule());
-                    }
-                }
                 
-            }
+                }
             
+            }
+            if(personWrite == false){
+                System.out.println(name + " doesn't create a capsule in any project");
+            }
         }
-
-        if(personWrite == false){
-            System.out.println(name + " doesn't create a capsule in any project");
+        else{
+            System.out.println("The collaborator doesn't exist");
         }
 
     }
@@ -571,15 +603,16 @@ public class SystemGreen {
         for (int i = 0; i < 10; i++){
             for (int j = 0; j < 6; j++) {
                 for (int j2 = 0; j2 < 50; j2++) {
-                    for (int k = 0; k < 3; k++) {
+                    for (int k = 0; k < 5; k++) {
                         if (controller.getProject(i).getStage(j).getCapsule(j2).getHashtag(k) == null) {
                             return;
                         }
                         if(controller.getProject(i).getStage(j).getCapsule(j2).getHashtag(k).contains(searchHashtag) == true){
-                            if(controller.getProject(i).getStage(j).getCapsule(j2).isApproveCapsule() == true && controller.getProject(i).getStage(j).getCapsule(j2).getPublishCapsule() == true){ 
+                            if(controller.getProject(i).getStage(j).getCapsule(j2).getPublishCapsule() == true){ 
                                 find = true;
                                 System.out.println("Match " + match+ ": ");
                                 match++;
+                                System.out.println("In the project:" + controller.getProject(i).getNameProject() +", in the stage:" +controller.getProject(i).getStage(j).getTypeStage() + ", in the capsule:" + j2);
                                 System.out.println("The situtation for the match is: " + controller.getProject(i).getStage(j).getCapsule(j2).getSituation());
                                 System.out.println("The lesson for the match is: " + controller.getProject(i).getStage(j).getCapsule(j2).getLessonCapsule());
                             }
@@ -599,31 +632,43 @@ public class SystemGreen {
         }
     }
 
-
+    /**
+    This method allows to register a new collaborator in a project. It prompts the user to enter the name and position of the collaborator, as well as the number of the project to which the collaborator will be assigned. If the project exists and has available budget, the collaborator is added to the project. 
+    The method also provides feedback to the user with a confirmation message.
+    */
     public void registerCollaborator(){
 
-        String name, position, id;
+        String name, position, confirmation;
         int project;
         System.out.println("Enter the name of the collaborator: ");
         name = input.next();
-        System.out.println("Enter the position of the collaborator in the company: ");
-        position = input.next();
-        System.out.println("Enter the id of the collaborator");
-        id = input.next();
-        System.out.println("Enter the number of the assigned project to the collaborator");
-        project = input.nextInt();
-        
-        if(controller.getProject(project).getBudget() == 0){
-            System.out.println("That proyect is empty");
+        if(controller.checkNameCollaborator(name) == false){ 
+            System.out.println("Enter the position of the collaborator in the company: ");
+            position = input.next();
 
+            System.out.println("Enter the number of the assigned project to the collaborator");
+            do{ 
+                project = input.nextInt();
+            }while(project > 9 || project < 0);
+            if(controller.checkProjectExist(project)){
+                if(controller.getProject(project).getBudget() == 0){
+                    System.out.println("That proyect is empty");
+    
+                }
+                else{
+                    controller.getProject(project).addCollaborator(name, position);
+    
+                    confirmation = "The collaborator "+ controller.getProject(project).getAuxiliarCollaborator() +" has been created in the project (" + controller.getProject(project).getAuxiliarCollaborator()+"/9)";
+                    System.out.println(confirmation);
+                }
+            }
+            else{
+                System.out.println("The proyect doesn't exist");
+            }
         }
         else{
-            controller.getProject(project).addCollaborator(name, position, id);
-
-            System.out.println("The collaborator "+ controller.getProject(project).getAuxiliarCollaborator() +" has been created in that project (" + controller.getProject(project).getAuxiliarCollaborator()+"/10)");
+            System.out.println("That id is already enter before, change the name");
         }
-        
-
     }
 
 }

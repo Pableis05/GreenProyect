@@ -49,7 +49,7 @@ public class Project {
         companyManager = new Manager(companyManagerName, companyManagerPhone);
     }
     /**
-    * Initializes the array of stages for a Project object.
+    * Initializes the array of stages for the Project object.
     */
     public void startBasicStage(){
 
@@ -58,11 +58,13 @@ public class Project {
         }
 
     }
-
+    /**
+     * Inicializes the array of collaborators for the project.
+     */
     public void startBasicCollaborators(){
 
         for (int i = 0; i < collaborators.length; i++) {
-            collaborators[i] = new Collaborator("", "", "");
+            collaborators[i] = new Collaborator("", "");
         }
 
     }
@@ -136,10 +138,14 @@ public class Project {
         stages[auxiliarStage-1].addCapsule(situation, typeCapsule, authorCapsule, positionAuthor, lessonCapsule);
 
     } 
+    /**
+    Adds a new collaborator to this project.
+    @param name the name of the collaborator to be added.
+    @param position the position of the collaborator in the company.
+    */
+    public void addCollaborator(String name, String position){
 
-    public void addCollaborator(String name, String position, String id){
-
-        collaborators[auxiliarCollaborator] = new Collaborator(name, position, id);
+        collaborators[auxiliarCollaborator] = new Collaborator(name, position);
         auxiliarCollaborator++;
 
     }
@@ -262,11 +268,28 @@ public class Project {
     public Manager getCompanyManager() {
         return companyManager;
     }
+    /**
+    * Get the given collaborator of the project.
+    * @param position the collaborator position searched.
+    * @return The given collaborator of the project.
+    */
     public Collaborator getCollaborators(int position) {
         return collaborators[position];
     }
+    /**
+    * Get the current number of collaborator in the project.
+    *
+    * @return The current amount of collaborators in the project.
+    */
     public int getAuxiliarCollaborator() {
         return auxiliarCollaborator-1;
+    }
+    /**
+    Returns an array of Collaborator objects representing the collaborators involved in the project.
+    @return an array of Collaborator objects representing the collaborators involved in the project.
+    */
+    public Collaborator[] getCollaborators() {
+        return collaborators;
     }
 
     

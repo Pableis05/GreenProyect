@@ -37,7 +37,7 @@ public class Capsule {
     public Capsule(String situation, int typeCapsule, String authorCapsule, String positionAuthor, String lessonCapsule) {
         idCapsule = (int) ((Math.random()*900000)+100000); 
         this.situation = situation;
-        this.typeCapsule = typeCapsule;
+        this.typeCapsule = typeCapsule; 
         switch(typeCapsule){
 
             case 0: enumTypeCapsule = TypeCapsule.TECNIC;
@@ -53,7 +53,7 @@ public class Capsule {
         this.authorCapsule = authorCapsule;
         this.positionAuthor = positionAuthor;
         this.lessonCapsule = lessonCapsule;
-        hashtag = new String[6];
+        hashtag = new String[10];
         startBasicHashtag(); 
         approveCapsule = false;
         publishCapsule = false;
@@ -240,6 +240,10 @@ public class Capsule {
     public String[] getHashtag() {
         return hashtag;
     }
+    /**
+    Returns the value of the enum typeCapsule in the capsule.
+    @return the value of the enum typeCapsule in the capsule.
+    */
     public TypeCapsule getEnumTypeCapsule() {
         return enumTypeCapsule;
     }

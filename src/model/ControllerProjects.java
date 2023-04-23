@@ -126,4 +126,51 @@ public class ControllerProjects {
         return iteration -1 ;
     }
 
+    /**
+    This method checks whether a collaborator with the given name exists in any of the projects. It iterates through all the projects and their collaborators, comparing the name with the one given as parameter.
+    @param name the name of the collaborator to search for
+    @return true if the collaborator is found in any project, false otherwise
+    */
+
+    public boolean checkCollaboratorExist(String name){
+        boolean find = false;
+        for (int i = 0; i < projects.length; i++) {
+            for (int j = 0; j < 10; j++) {
+                if(projects[i].getCollaborators(j).getNameCollaborator().equals(name)){
+                    find = true;
+                }
+            }
+        }
+        return find;
+    }
+
+    /**
+    This method checks whether a project with the given number exists. It verifies if the project name is not null in the projects array.
+    @param project the number of the project to search for
+    @return false if the project exists, true otherwise
+    */
+    public boolean checkProjectExist(int project){
+        boolean free = true;
+        if(projects[project] == null){
+            free = false;
+        }
+        return free;
+    }
+    /**
+    Checks if a collaborator with the given name is already assigned to any project.
+    @param name the name of the collaborator to search for.
+    @return true if a collaborator with the given name is found in any project, false otherwise.
+    */
+    public boolean checkNameCollaborator(String name){
+        boolean find = false;
+        for (int i = 0; i < projects.length; i++) {
+            for (int j = 0; j < projects[i].getCollaborators().length; j++) {
+                if(projects[i].getCollaborators(j).getNameCollaborator().equals(name)){
+                    find = true;
+                }
+            }
+        }
+        return find;
+    }
+
 }   

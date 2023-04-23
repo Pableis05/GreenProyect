@@ -146,9 +146,17 @@ public class Stage{
     public boolean isActiveStage() {
         return activeStage;
     }
+    /**
+    Returns the type of stage that this object represents.
+    @return the type of stage
+    */
     public TypeStage getTypeStage() {
         return typeStage;
     }
+    /**
+    Sets the type of stage that this object represents.
+    @param typeStage the new type of stage
+    */
     public void setTypeStage(TypeStage typeStage) {
         this.typeStage = typeStage;
     }
